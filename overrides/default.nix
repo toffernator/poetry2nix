@@ -100,7 +100,7 @@ lib.composeManyExtensions [
   (self: super:
     let
       inherit (self.python) stdenv;
-      inherit (pkgs.buildPackages) pkg-config;
+      inherit (pkgs.buildPackages) pkg-config pkgconfig;
       pyBuildPackages = self.python.pythonForBuild.pkgs;
 
       selectQt5 = version:
@@ -942,10 +942,10 @@ lib.composeManyExtensions [
               inherit (pkgs.hdf5) mpiSupport;
             in
             {
-              nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkg-config ];
+              nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [ pkgconfig ];
               buildInputs =
                 (old.buildInputs or [ ])
-                ++ [ pkgs.hdf5 self.pkg-config ]
+                ++ [ pkgs.hdf5 self.pkgconfig ]
                 ++ lib.optional mpiSupport mpi
               ;
               propagatedBuildInputs =
